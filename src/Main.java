@@ -5,14 +5,18 @@ import java.util.Random;
  */
 public class Main {
     public static void main(String args[]) {
-        StringFactory factory = new StringFactory();
-
         Random rnd = new Random();
+        CharSequence s1 = StringFactory.getString(StringFactory.StringSource.DISK, 1);
+        CharSequence s2 = StringFactory.getString(StringFactory.StringSource.NETWORK, 1);
 
-        for (int i = 0; i < 10; i++) {
-            rnd.nextInt(2000);
-            CharSequence s = factory.getString(10);
-            System.out.printf(">> %s (%d)\n", s.getClass().getName(), s.length());
+        for (int i = 0; i < 20; i++) {
+            int len = rnd.nextInt(50);
+
+            if (rnd.nextInt(1000) > 400) {
+                System.out.printf(">> DISK: %s\n\n", s1.subSequence(0, len));
+            } else {
+                System.out.printf(">> NETWORK: %s\n\n", s2.subSequence(0, len));
+            }
         }
     }
 }
